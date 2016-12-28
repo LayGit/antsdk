@@ -1,11 +1,16 @@
 package trade
 
+import (
+  "github.com/LayGit/antsdk/api"
+)
+
 type AlipayTradePayResponse struct {
   Result  AlipayTradePayResult  `json:"alipay_trade_pay_response"`
   Sign    string                `json:"sign"`
 }
 
 type AlipayTradePayResult struct {
+  *api.CommonResponse
   TradeNo               string            `json:"trade_no"`                 // 支付宝交易号
   OutTradeNo            string            `json:"out_trade_no"`             // 商户订单号
   BuyerLogonId          string            `json:"buyer_logon_id"`           // 买家支付宝账号
