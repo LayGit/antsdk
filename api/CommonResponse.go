@@ -7,3 +7,7 @@ type CommonResponse struct {
   SubMsg    string  `json:"sub_msg"`
   Sign      string  `json:"sign"`
 }
+
+func (this *CommonResponse) IsSuccess() bool {
+  return this.SubCode == ""
+}
