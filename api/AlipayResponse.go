@@ -1,6 +1,6 @@
 package api
 
-type CommonResponse struct {
+type AlipayResponse struct {
   Code      string  `json:"code"`
   Msg       string  `json:"msg"`
   SubCode   string  `json:"sub_code"`
@@ -8,6 +8,6 @@ type CommonResponse struct {
   Sign      string  `json:"sign"`
 }
 
-func (this *CommonResponse) IsSuccess() bool {
+func (this *AlipayResponse) IsSuccess() bool {
   return this.SubCode == ""
 }

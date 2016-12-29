@@ -1,8 +1,23 @@
 package trade
 
+import (
+  "github.com/LayGit/antsdk/api"
+  "github.com/LayGit/antsdk/utils"
+)
+
 // 统一收单交易创建
 // 商户通过该接口进行交易的创建下单
 type AlipayTradeCreateRequest struct {
+  api.IAlipayRequest
+  TerminalType  string                              `json:"terminal_type"`
+  TerminalInfo  string                              `json:"terminal_info"`
+  ProdCode      string                              `json:"prod_code"`
+  NotifyUrl     string                              `json:"notify_url"`
+  ReturnUrl     string                              `json:"return_url"`
+  BizContent    AlipayTradeCreateRequestBizContent  `json:"biz_content"`
+}
+
+type AlipayTradeCreateRequestBizContent struct {
   OutTradeNo            string          `json:"out_trade_no"`           // 商户订单号,64个字符以内、只能包含字母、数字、下划线；需保证在商户端不重复
   SellerId              string          `json:"seller_id"`              // 卖家支付宝用户ID。 如果该值为空，则默认为商户签约账号对应的支付宝用户ID
   TotalAmount           float64         `json:"total_amount"`           // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000] 如果同时传入了【打折金额】，【不可打折金额】，【订单总金额】三者，则必须满足如下条件：【订单总金额】=【打折金额】+【不可打折金额】
@@ -23,6 +38,40 @@ type AlipayTradeCreateRequest struct {
   SubMerchant           SubMerchant     `json:"sub_merchant"`           // 二级商户信息,当前只对特殊银行机构特定场景下使用此字段
 }
 
-func (this *AlipayTradeCreateRequest) GetMethod() string {
+func (this *AlipayTradeCreateRequest) GetApiMethodName() string {
   return "alipay.trade.create"
+}
+
+func (this *AlipayTradeCreateRequest) GetApiVersion() string {
+  return "1.0"
+}
+
+func (this *AlipayTradeCreateRequest) GetTerminalType() string {
+  return this.TerminalType
+}
+
+func (this *AlipayTradeCreateRequest) GetTerminalInfo() string {
+  return this.TerminalInfo
+}
+
+func (this *AlipayTradeCreateRequest) GetNotifyUrl() string {
+  return this.NotifyUrl
+}
+
+func (this *AlipayTradeCreateRequest) GetReturnUrl() string {
+  return this.ReturnUrl
+}
+
+func (this *AlipayTradeCreateRequest) GetProdCode() string {
+  return this.ProdCode
+}
+
+func (this *AlipayTradeCreateRequest) IsNeedEncrypt() bool {
+  return false
+}
+
+func (this *AlipayTradeCreateRequest) GetTextParams() *utils.AlipayHashMap {
+  txtParams := utils.NewAlipayHashMap()
+  txtParams.Put("biz_content", utils.ToJson(this.BizContent))
+  return txtParams
 }

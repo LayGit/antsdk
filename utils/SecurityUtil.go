@@ -17,6 +17,30 @@ import (
   "fmt"
 )
 
+func GetSignMap(requestHolder *RequestParametersHolder) map[string]string {
+  singleMap := make(map[string]string)
+
+  if requestHolder.ApplicationParams.Length > 0 {
+    for k, v := range requestHolder.ApplicationParams.GetMap() {
+      singleMap[k] = v
+    }
+  }
+
+  if requestHolder.ProtocalMustParams.Length > 0 {
+    for k, v := range requestHolder.ProtocalMustParams.GetMap() {
+      singleMap[k] = v
+    }
+  }
+
+  if requestHolder.ProtocalOptParams.Length > 0 {
+    for k, v := range requestHolder.ProtocalOptParams.GetMap() {
+      singleMap[k] = v
+    }
+  }
+
+  return singleMap
+}
+
 func GetSignStr(m map[string]string) string {
   // 对 key 进行升序排序
   sortedKeys := make([]string, 0)

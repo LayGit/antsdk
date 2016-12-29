@@ -1,8 +1,23 @@
 package trade
 
+import (
+  "github.com/LayGit/antsdk/api"
+  "github.com/LayGit/antsdk/utils"
+)
+
 // 统一收单交易支付
 // 收银员使用扫码设备读取用户手机支付宝“付款码”/声波获取设备（如麦克风）读取用户手机支付宝的声波信息后，将二维码或条码信息/声波信息通过本接口上送至支付宝发起支付。
 type AlipayTradePayRequest struct {
+  api.IAlipayRequest
+  TerminalType  string                            `json:"terminal_type"`
+  TerminalInfo  string                            `json:"terminal_info"`
+  ProdCode      string                            `json:"prod_code"`
+  NotifyUrl     string                            `json:"notify_url"`
+  ReturnUrl     string                            `json:"return_url"`
+  BizContent    AlipayTradePayRequestBizContent   `json:"biz_content"`
+}
+
+type AlipayTradePayRequestBizContent struct {
   OutTradeNo            string          `json:"out_trade_no"`           // 商户订单号,64个字符以内、可包含字母、数字、下划线；需保证在商户端不重复
   Scene                 string          `json:"scene"`                  // 支付场景 条码支付，取值：bar_code 声波支付，取值：wave_code
   AuthCode              string          `json:"auth_code"`              // 支付授权码
@@ -23,6 +38,40 @@ type AlipayTradePayRequest struct {
   SubMerchant           SubMerchant     `json:"sub_merchant"`           // 二级商户信息,当前只对特殊银行机构特定场景下使用此字段
 }
 
-func (this *AlipayTradePayRequest) GetMethod() string {
+func (this *AlipayTradePayRequest) GetApiMethodName() string {
   return "alipay.trade.pay"
+}
+
+func (this *AlipayTradePayRequest) GetApiVersion() string {
+  return "1.0"
+}
+
+func (this *AlipayTradePayRequest) GetTerminalType() string {
+  return this.TerminalType
+}
+
+func (this *AlipayTradePayRequest) GetTerminalInfo() string {
+  return this.TerminalInfo
+}
+
+func (this *AlipayTradePayRequest) GetNotifyUrl() string {
+  return this.NotifyUrl
+}
+
+func (this *AlipayTradePayRequest) GetReturnUrl() string {
+  return this.ReturnUrl
+}
+
+func (this *AlipayTradePayRequest) GetProdCode() string {
+  return this.ProdCode
+}
+
+func (this *AlipayTradePayRequest) IsNeedEncrypt() bool {
+  return false
+}
+
+func (this *AlipayTradePayRequest) GetTextParams() *utils.AlipayHashMap {
+  txtParams := utils.NewAlipayHashMap()
+  txtParams.Put("biz_content", utils.ToJson(this.BizContent))
+  return txtParams
 }

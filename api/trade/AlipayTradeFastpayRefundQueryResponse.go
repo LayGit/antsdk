@@ -5,12 +5,7 @@ import (
 )
 
 type AlipayTradeFastpayRefundQueryResponse struct {
-  Result  AlipayTradeFastpayRefundQueryResult `json:"alipay_trade_fastpay_refund_query_response"`
-  Sign    string                              `json:"sign"`
-}
-
-type AlipayTradeFastpayRefundQueryResult struct {
-  api.CommonResponse
+  api.AlipayResponse
   TradeNo       string  `json:"trade_no"`              // 支付宝交易号
   OutTradeNo    string  `json:"out_trade_no"`          // 创建交易传入的商户订单号
   OutRequestNo  string  `json:"out_request_no"`        // 本笔退款对应的退款请求号

@@ -16,86 +16,45 @@ import (
 )
 
 type AlipayClient struct {
-  gatewayUrl              string
+  serverUrl               string
   appId                   string
-  rsaPrivateKeyFilePath   string
+  privateKey              string
+  prodCode                string
   format                  string
-  charset                 string
-  alipayPublicKeyFilePath string
   signType                string
-  version                 string
-  notifyUrl               string
+  encryptType             string
+  encryptKey              string
+  alipayPublicKey         string
+  charset                 string
 }
 
-func NewDefaultAlipayClient(gatewayUrl, appId, rsaPrivateKeyFilePath, alipayPublicKeyFilePath, notifyUrl string) *AlipayClient {
+func NewDefaultAlipayClient(serverUrl, appId, privateKey, alipayPublicKey string) *AlipayClient {
   return &AlipayClient{
-    gatewayUrl: gatewayUrl,
+    serverUrl: serverUrl,
     appId: appId,
-    rsaPrivateKeyFilePath: rsaPrivateKeyFilePath,
-    format: "JSON",
-    charset: "utf-8",
-    alipayPublicKeyFilePath: alipayPublicKeyFilePath,
-    signType: "RSA",
-    version: "1.0",
-    notifyUrl: notifyUrl,
+    privateKey: privateKey,
+    alipayPublicKey: alipayPublicKey,
+    format: CONST_FORMAT_JSON,
+    signType: CONST_SIGN_TYPE_RSA,
+    encryptType: CONST_ENCRYPT_TYPE_AES,
   }
 }
 
-func (this *AlipayClient) getCommonRequest(method string) *api.CommonRequest {
-  commonRequest := &api.CommonRequest{}
-  commonRequest.AppId = this.appId
-  commonRequest.Method = method
-  commonRequest.Format = this.format
-  commonRequest.Charset = this.charset
-  commonRequest.SignType = this.signType
-  commonRequest.Version = this.version
-  commonRequest.NotifyUrl = this.notifyUrl
-  commonRequest.Timestamp = time.Now().Format("2006-01-02 15:04:05")
-  return commonRequest
+func (this *AlipayClient) Execute(request, response interface{}) error {
+  return this.ExecuteWithAccessToken(request, response, "")
 }
 
-func (this *AlipayClient) Execute(request interface{}, response interface{}) error {
-  // 通过反射获取方法
-  m := reflect.ValueOf(request).MethodByName("GetMethod")
-  values := m.Call([]reflect.Value{})
+func (this *AlipayClient) ExecuteWithAccessToken(request, response interface{}, accessToken string) error {
+  return this.ExecuteWithAppAuthToken(request, response, accessToken, "")
+}
 
-  param := this.getCommonRequest(values[0].String())
-  b, _ := json.Marshal(request)
-  param.BizContent = string(b)
-
-  var err error
-
-  // 签名
-  param.Sign, err = utils.Sign(param.ToMap(), utils.ReadPemFile(this.rsaPrivateKeyFilePath))
+func (this *AlipayClient) ExecuteWithAppAuthToken(request, response interface{}, accessToken, appAuthToken string) error {
+  bResult, err := this.doPost(request, accessToken, appAuthToken)
   if err != nil {
     return err
   }
 
-  params := param.ToMap()
-
-  data := &url.Values{}
-  for k, v := range params {
-    if v != "" {
-      data.Set(k, v)
-    }
-  }
-
-  reqParams := ioutil.NopCloser(strings.NewReader(data.Encode()))
-  client := &http.Client{}
-  req, _ := http.NewRequest("POST", this.gatewayUrl + "?charset=" + this.charset, reqParams)
-  req.Header.Set("Content-Type", "application/x-www-form-urlencoded;param=value")
-
-  resp, err := client.Do(req)
-  defer resp.Body.Close()
-  if err != nil {
-    return err
-  }
-
-  bResult, err := ioutil.ReadAll(resp.Body)
-  if err != nil {
-    return err
-  }
-
+  // 验签
   strResp := string(bResult)
 
   // 正则验签
@@ -111,7 +70,7 @@ func (this *AlipayClient) Execute(request interface{}, response interface{}) err
   sign := signMatchRes[1]
 
   // 验证签名
-  isOk, err := utils.SyncVerifySign(sign, []byte(result), utils.ReadPemFile(this.alipayPublicKeyFilePath))
+  isOk, err := utils.SyncVerifySign(sign, []byte(result), []byte(this.alipayPublicKey))
   if err != nil {
     return err
   }
@@ -120,5 +79,128 @@ func (this *AlipayClient) Execute(request interface{}, response interface{}) err
     return errors.New("Response sign verify error")
   }
 
-  return json.Unmarshal(bResult, &response)
+  return json.Unmarshal([]byte(result), &response)
+}
+
+func (this *AlipayClient) doPost(request interface{}, accessToken, appAuthToken string) ([]byte, error) {
+  requestHolder, err := this.getRequestHolderWithSign(reflect.ValueOf(request).Interface().(api.IAlipayRequest), accessToken, appAuthToken)
+  if err != nil {
+    return nil, err
+  }
+
+  reqUrl := this.getRequestUrl(requestHolder)
+
+  if _, ok := request.(api.IAlipayUploadRequest); ok {
+    return nil, nil
+  }
+  return this.postRequest(reqUrl, requestHolder.ApplicationParams.GetMap())
+}
+
+func (this *AlipayClient) postRequest(reqUrl string, params map[string]string) ([]byte, error) {
+  data := &url.Values{}
+
+  for k, v := range params {
+    if v != "" {
+      data.Set(k, v)
+    }
+  }
+
+  reqParams := ioutil.NopCloser(strings.NewReader(data.Encode()))
+  client := &http.Client{}
+  req, _ := http.NewRequest("POST", reqUrl, reqParams)
+  req.Header.Set("Content-Type", "application/x-www-form-urlencoded;param=value")
+
+  resp, err := client.Do(req)
+  defer resp.Body.Close()
+  if err != nil {
+    return nil, err
+  }
+
+  return ioutil.ReadAll(resp.Body)
+}
+
+func (this *AlipayClient) getRequestUrl(requestHolder *utils.RequestParametersHolder) string {
+  sbUrl := utils.NewStringBuilder()
+  sbUrl.Append(this.serverUrl)
+  sysMustQuery := utils.BuildQuery(requestHolder.ProtocalMustParams.GetMap())
+  sysOptQuery := utils.BuildQuery(requestHolder.ProtocalOptParams.GetMap())
+
+  sbUrl.Append("?")
+  sbUrl.Append(sysMustQuery)
+  if sysOptQuery != "" {
+    sbUrl.Append("&")
+    sbUrl.Append(sysOptQuery)
+  }
+
+  return sbUrl.ToString()
+}
+
+func (this *AlipayClient) getRequestHolderWithSign(request api.IAlipayRequest, accessToken, appAuthToken string) (*utils.RequestParametersHolder, error) {
+  requestHolder := utils.NewRequestParametersHolder()
+  appParams := request.GetTextParams()
+
+  // 只有新接口和设置密钥才能支持加密
+  if request.IsNeedEncrypt() {
+    if appParams.Get(CONST_BIZ_CONTENT_KEY) == "" {
+      return nil, errors.New("当前API不支持加密请求")
+    }
+    // 需要加密必须设置密钥和加密算法
+    if this.encryptKey == "" || this.encryptType == "" {
+      return nil, errors.New("API请求要求加密，则必须设置密钥和密钥类型：encryptKey=" + this.encryptKey + ",encryptType=" + this.encryptType)
+    }
+
+    encryptContent, err := utils.EncryptContent(appParams.Get(CONST_BIZ_CONTENT_KEY), this.encryptType, this.encryptKey)
+    if err != nil {
+      return nil, err
+    }
+
+    appParams.Put(CONST_BIZ_CONTENT_KEY, encryptContent)
+  }
+
+  if appAuthToken != "" {
+    appParams.Put(CONST_APP_AUTH_TOKEN, appAuthToken)
+  }
+
+  requestHolder.ApplicationParams = appParams
+
+  if this.charset == "" {
+    this.charset = CONST_CHARSET_UTF8
+  }
+
+  protocalMustParams := utils.NewAlipayHashMap()
+  protocalMustParams.Put(CONST_METHOD, request.GetApiMethodName())
+  protocalMustParams.Put(CONST_VERSION, request.GetApiVersion())
+  protocalMustParams.Put(CONST_APP_ID, this.appId)
+  protocalMustParams.Put(CONST_SIGN_TYPE, this.signType)
+  protocalMustParams.Put(CONST_TERMINAL_TYPE, request.GetTerminalType())
+  protocalMustParams.Put(CONST_TERMINAL_INFO, request.GetTerminalInfo())
+  protocalMustParams.Put(CONST_NOTIFY_URL, request.GetNotifyUrl())
+  protocalMustParams.Put(CONST_RETURN_URL, request.GetReturnUrl())
+  protocalMustParams.Put(CONST_CHARSET, this.charset)
+
+  if request.IsNeedEncrypt() {
+    protocalMustParams.Put(CONST_ENCRYPT_TYPE, this.encryptType)
+  }
+  protocalMustParams.Put(CONST_TIMESTAMP, time.Now().Format("2006-01-02 15:04:05"))
+  requestHolder.ProtocalMustParams = protocalMustParams
+
+  protocalOptParams := utils.NewAlipayHashMap()
+  protocalOptParams.Put(CONST_FORMAT, this.format)
+  protocalOptParams.Put(CONST_ACCESS_TOKEN, accessToken)
+  protocalOptParams.Put(CONST_ALIPAY_SDK, CONST_SDK_VERSION)
+  protocalOptParams.Put(CONST_PROD_CODE, request.GetProdCode())
+  requestHolder.ProtocalOptParams = protocalOptParams
+
+  if this.signType != "" {
+    signMap := utils.GetSignMap(requestHolder)
+    sign, err := utils.Sign(signMap, []byte(this.privateKey))
+    if err != nil {
+      return nil, err
+    }
+    protocalMustParams.Put(CONST_SIGN, sign)
+  } else {
+    protocalMustParams.Put(CONST_SIGN, "")
+  }
+
+  return requestHolder, nil
 }

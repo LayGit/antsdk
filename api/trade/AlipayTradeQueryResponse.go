@@ -5,12 +5,7 @@ import (
 )
 
 type AlipayTradeQueryResponse struct {
-  Result  AlipayTradeQueryResult  `json:"alipay_trade_query_response"`
-  Sign    string                  `json:"sign"`
-}
-
-type AlipayTradeQueryResult struct {
-  api.CommonResponse
+  api.AlipayResponse
   TradeNo             string            `json:"trade_no"`                 // 支付宝交易号
   OutTradeNo          string            `json:"out_trade_no"`             // 商家订单号
   OpenId              string            `json:"open_id"`                  // 买家支付宝用户号，该字段将废弃，不要使用
