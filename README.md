@@ -15,9 +15,10 @@
 使用示例：
 ```go
 import (
-    "fmt"
-    "github.com/LayGit/antsdk/alipay"
-    "github.com/LayGit/antsdk/api/trade"
+  "fmt"
+  "github.com/LayGit/antsdk/alipay"
+  "github.com/LayGit/antsdk/api/trade"
+  "github.com/LayGit/antsdk/utils"
 )
 
 func main() {
