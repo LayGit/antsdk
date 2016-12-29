@@ -4,12 +4,14 @@ import (
   "net/url"
   "net/http"
   "io/ioutil"
+  "mime/multipart"
   "strings"
   "encoding/json"
   "reflect"
   "errors"
   "regexp"
   "time"
+  "bytes"
 
   "github.com/LayGit/antsdk/utils"
   "github.com/LayGit/antsdk/api"
@@ -65,7 +67,7 @@ func (this *AlipayClient) ExecuteWithAppAuthToken(request, response interface{},
   regSign := regexp.MustCompile(exptSign)
   signMatchRes := regSign.FindStringSubmatch(strResp)
   if len(signMatchRes) < 2 {
-    return errors.New("loss of sign")
+    return errors.New("验签失败:签名丢失")
   }
   sign := signMatchRes[1]
 
@@ -76,7 +78,7 @@ func (this *AlipayClient) ExecuteWithAppAuthToken(request, response interface{},
   }
 
   if !isOk {
-    return errors.New("Response sign verify error")
+    return errors.New("验签失败:签名错误")
   }
 
   return json.Unmarshal([]byte(result), &response)
@@ -90,8 +92,8 @@ func (this *AlipayClient) doPost(request interface{}, accessToken, appAuthToken 
 
   reqUrl := this.getRequestUrl(requestHolder)
 
-  if _, ok := request.(api.IAlipayUploadRequest); ok {
-    return nil, nil
+  if fileReq, ok := request.(api.IAlipayUploadRequest); ok {
+    return this.postFileRequest(reqUrl, requestHolder.ApplicationParams.GetMap(), fileReq.GetFileParams())
   }
   return this.postRequest(reqUrl, requestHolder.ApplicationParams.GetMap())
 }
@@ -106,10 +108,48 @@ func (this *AlipayClient) postRequest(reqUrl string, params map[string]string) (
   }
 
   reqParams := ioutil.NopCloser(strings.NewReader(data.Encode()))
-  client := &http.Client{}
+  var client http.Client
   req, _ := http.NewRequest("POST", reqUrl, reqParams)
   req.Header.Set("Content-Type", "application/x-www-form-urlencoded;param=value")
 
+  resp, err := client.Do(req)
+  defer resp.Body.Close()
+  if err != nil {
+    return nil, err
+  }
+
+  return ioutil.ReadAll(resp.Body)
+}
+
+func (this *AlipayClient) postFileRequest(reqUrl string, params map[string]string, fileParams map[string]*utils.FileItem) ([]byte, error) {
+  if fileParams == nil || len(fileParams) == 0 {
+    return this.postRequest(reqUrl, params)
+  }
+
+  b:= &bytes.Buffer{}
+  w := multipart.NewWriter(b)
+
+  if params != nil && len(params) > 0 {
+    for k, v := range params {
+      w.WriteField(k, v)
+    }
+  }
+
+  for k, v := range fileParams {
+      fw, err := w.CreateFormFile(k, v.FileName)
+      if err != nil {
+        return nil, err
+      }
+      fw.Write(v.Content)
+  }
+  w.Close()
+
+  req, err := http.NewRequest("POST", reqUrl, b)
+  if err != nil {
+    return nil, err
+  }
+  req.Header.Set("Content-Type", w.FormDataContentType())
+  var client http.Client
   resp, err := client.Do(req)
   defer resp.Body.Close()
   if err != nil {
