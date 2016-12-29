@@ -1,7 +1,53 @@
 # antsdk
 蚂蚁金服(支付宝)开放平台 go-sdk
 
-已支持下列接口：
+## 使用示例
+
+```go
+import (
+  "fmt"
+  "github.com/LayGit/antsdk/alipay"
+  "github.com/LayGit/antsdk/api/trade"
+  "github.com/LayGit/antsdk/utils"
+)
+
+func main() {
+    client := alipay.NewDefaultAlipayClient("https://openapi.alipay.com/gateway.do", "商户AppId", "商户密钥", "支付宝公钥")
+    // 创建请求
+    request := &trade.AlipayTradeQueryRequest{}
+    // 设置参数
+    request.BizContent.OutTradeNo = "L123456"
+    // 请求响应
+    var response trade.AlipayTradeQueryResponse
+    err := client.Execute(request, &response)
+    if err != nil {
+        // 错误处理
+        fmt.Println(err)
+    } else {
+        // todo:
+        fmt.Println(response.Code)
+    }
+}
+```
+
+## API 支持情况
+- [x] [支付 API](#支付-api)
+- [x] [会员 API](#会员-api)
+- [x] [店铺 API](#店铺-api)
+- [ ] 营销 API
+- [ ] 服务窗 API
+- [ ] 芝麻信用 API
+- [ ] 工具类 API
+- [ ] 风险控制 API
+- [ ] 服务市场 API
+- [ ] 账务 API
+- [ ] 生活缴费 API
+- [ ] 车主服务 API
+- [ ] 数据服务 API
+- [ ] 卡券 API
+- [ ] 广告 API
+- [ ] 地铁购票 API
+- [ ] 理财 API
 
 ## 支付 API
 
@@ -36,32 +82,3 @@
 业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest | alipay.offline.market.applyorder.batchquery
 门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest | alipay.offline.market.shop.summary.batchquery
 门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest | alipay.offline.market.shop.category.query
-
-## 使用示例
-
-```go
-import (
-  "fmt"
-  "github.com/LayGit/antsdk/alipay"
-  "github.com/LayGit/antsdk/api/trade"
-  "github.com/LayGit/antsdk/utils"
-)
-
-func main() {
-    client := alipay.NewDefaultAlipayClient("https://openapi.alipay.com/gateway.do", "商户AppId", "商户密钥", "支付宝公钥")
-    // 创建请求
-    request := &trade.AlipayTradeQueryRequest{}
-    // 设置参数
-    request.BizContent.OutTradeNo = "L123456"
-    // 请求响应
-    var response trade.AlipayTradeQueryResponse
-    err := client.Execute(request, &response)
-    if err != nil {
-        // 错误处理
-        fmt.Println(err)
-    } else {
-        // todo:
-        fmt.Println(response.Code)
-    }
-}
-```
