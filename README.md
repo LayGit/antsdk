@@ -37,7 +37,7 @@ func main() {
 - [ ] 服务窗 API
 - [x] [芝麻信用 API](#芝麻信用-api)
 - [x] [工具类 API](#工具类-api)
-- [ ] 风险控制 API
+- [x] [风险控制 API](#风险控制-api)
 - [ ] 服务市场 API
 - [x] [账务 API](#账务-api)
 - [ ] 生活缴费 API
@@ -103,6 +103,12 @@ func main() {
 换取授权访问令牌 | util.AlipaySystemOauthTokenRequest
 查询某个应用授权AppAuthToken的授权信息 | util.AlipayOpenAuthTokenAppQueryRequest
 用户登陆授权 | util.AlipayUserInfoAuthRequest
+
+## 风险控制 API
+描述 | API
+---|---
+“蚁盾”风险评分服务 | risk.AlipaySecurityRiskRainscoreQueryRequest
+蚁盾风险评分服务上数版 | risk.SsdataDataserviceRiskRainscoreQueryRequest
 
 ## 账务 API
 
