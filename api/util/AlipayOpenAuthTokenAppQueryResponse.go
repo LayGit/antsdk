@@ -5,12 +5,7 @@ import (
 )
 
 type AlipayOpenAuthTokenAppQueryResponse struct {
-  Result  AlipayOpenAuthTokenAppQueryResult `json:"alipay_open_auth_token_app_query_response"`
-  Sign    string                            `json:"sign"`
-}
-
-type AlipayOpenAuthTokenAppQueryResult struct {
-  api.CommonResponse
+  api.AlipayResponse
   UserId      string `json:"user_id"`       // 授权商户的user_id
   AuthAppId   string `json:"auth_app_id"`   // 授权商户的appid
   ExpiresIn   string `json:"expires_in"`    // 应用授权令牌失效时间，单位到秒

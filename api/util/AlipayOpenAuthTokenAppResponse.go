@@ -5,12 +5,7 @@ import (
 )
 
 type AlipayOpenAuthTokenAppResponse struct {
-  Result  AlipayOpenAuthTokenAppResult `json:"alipay_open_auth_token_app_response"`
-  Sign    string                       `json:"sign"`
-}
-
-type AlipayOpenAuthTokenAppResult struct {
-  api.CommonResponse
+  api.AlipayResponse
   UserId          string `json:"user_id"`           // 授权商户的user_id
   AuthAppId       string `json:"auth_app_id"`       // 授权商户的appid
   AppAuthToken    string `json:"app_auth_token"`    // 应用授权令牌

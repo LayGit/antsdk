@@ -37,7 +37,7 @@ func main() {
 - [ ] 营销 API
 - [ ] 服务窗 API
 - [ ] 芝麻信用 API
-- [ ] 工具类 API
+- [x] [工具类 API](#工具类-api)
 - [ ] 风险控制 API
 - [ ] 服务市场 API
 - [ ] 账务 API
@@ -82,3 +82,12 @@ func main() {
 业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest | alipay.offline.market.applyorder.batchquery
 门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest | alipay.offline.market.shop.summary.batchquery
 门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest | alipay.offline.market.shop.category.query
+
+## 工具类 API
+
+描述 | API | Method
+---|---|---
+换取应用授权令牌 | util.AlipayOpenAuthTokenAppRequest | alipay.open.auth.token.app
+换取授权访问令牌 | util.AlipaySystemOauthTokenRequest | alipay.system.oauth.token
+查询某个应用授权AppAuthToken的授权信息 | util.AlipayOpenAuthTokenAppQueryRequest | alipay.open.auth.token.app.query
+用户登陆授权 | util.AlipayUserInfoAuthRequest | alipay.user.info.auth
