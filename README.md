@@ -40,7 +40,7 @@ func main() {
 - [x] [风险控制 API](#风险控制-api)
 - [ ] 服务市场 API
 - [x] [账务 API](#账务-api)
-- [ ] 生活缴费 API
+- [x] [生活缴费 API](#生活缴费-api)
 - [ ] 车主服务 API
 - [ ] 数据服务 API
 - [ ] 卡券 API
@@ -115,3 +115,14 @@ func main() {
 描述 | API
 ---|---
 查询对账单下载地址 | bill.AlipayDataDataserviceBillDownloadurlQueryRequest
+
+## 生活缴费 API
+描述 | API
+---|---
+查询账单 | ebpp.AlipayEbppBillGetRequest
+创建账单 | ebpp.AlipayEbppBillAddRequest
+缴费直连代扣订单支付状态查询 | ebpp.AlipayEbppPdeductBillPayStatusRequest
+直连代扣协议查询接口 | ebpp.AlipayEbppPdeductSignQueryRequest
+缴费直连代扣取消签约 | ebpp.AlipayEbppPdeductSignCancelRequest
+公共事业缴费直连代扣扣款支付接口 | ebpp.AlipayEbppPdeductPayRequest
+缴费直连代扣签约 | ebpp.AlipayEbppPdeductSignAddRequest
