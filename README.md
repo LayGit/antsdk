@@ -72,16 +72,16 @@ func main() {
 
 ## 店铺 API
 
-描述 | API | Method
----|---|---
-创建门店信息 | shop.AlipayOfflineMarketShopCreateRequest |  alipay.offline.market.shop.create
-修改门店信息 | shop.AlipayOfflineMarketShopModifyRequest | alipay.offline.market.shop.modify
-查询商户的门店编号列表 | shop.AlipayOfflineMarketShopBatchqueryRequest | alipay.offline.market.shop.batchquery
-查询单个门店信息接口 | shop.AlipayOfflineMarketShopQuerydetailRequest | alipay.offline.market.shop.querydetail
-上传门店照片和视频接口 | shop.AlipayOfflineMaterialImageUploadRequest | alipay.offline.material.image.upload
-业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest | alipay.offline.market.applyorder.batchquery
-门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest | alipay.offline.market.shop.summary.batchquery
-门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest | alipay.offline.market.shop.category.query
+描述 | API
+---|---
+创建门店信息 | shop.AlipayOfflineMarketShopCreateRequest
+修改门店信息 | shop.AlipayOfflineMarketShopModifyRequest
+查询商户的门店编号列表 | shop.AlipayOfflineMarketShopBatchqueryRequest
+查询单个门店信息接口 | shop.AlipayOfflineMarketShopQuerydetailRequest
+上传门店照片和视频接口 | shop.AlipayOfflineMaterialImageUploadRequest
+业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest
+门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest
+门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest
 
 ## 芝麻信用 API
 
