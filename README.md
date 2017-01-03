@@ -36,7 +36,7 @@ func main() {
 - [x] [店铺 API](#店铺-api)
 - [ ] 营销 API
 - [ ] 服务窗 API
-- [ ] 芝麻信用 API
+- [x] [芝麻信用 API](#芝麻信用-api)
 - [x] [工具类 API](#工具类-api)
 - [ ] 风险控制 API
 - [ ] 服务市场 API
@@ -82,6 +82,19 @@ func main() {
 业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest | alipay.offline.market.applyorder.batchquery
 门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest | alipay.offline.market.shop.summary.batchquery
 门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest | alipay.offline.market.shop.category.query
+
+## 芝麻信用 API
+
+描述 | API | Method
+---|---|---
+获取数据反馈模板 | zhima.ZhimaDataFeedbackurlQueryRequest | zhima.data.feedbackurl.query
+批量数据反馈服务 | zhima.ZhimaDataBatchFeedbackRequest | zhima.data.batch.feedback
+芝麻信用评分普惠版 | zhima.ZhimaCreditScoreBriefGetRequest | zhima.credit.score.brief.get
+行业关注名单普惠版 | zhima.ZhimaCreditWatchlistBriefGetRequest | zhima.credit.watchlist.brief.get
+欺诈信息验证 | zhima.ZhimaCreditAntifraudVerifyRequest | zhima.credit.antifraud.verify
+认证初始化 | zhima.ZhimaCustomerCertificationInitializeRequest | zhima.customer.certification.initialize
+芝麻认证开始认证 | zhima.ZhimaCustomerCertificationCertifyRequest | zhima.customer.certification.certify
+芝麻认证查询 | zhima.ZhimaCustomerCertificationQueryRequest | zhima.customer.certification.query
 
 ## 工具类 API
 
