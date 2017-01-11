@@ -45,7 +45,7 @@ func main() {
 - [ ] 数据服务 API
 - [ ] 卡券 API
 - [x] [广告 API](#广告-api)
-- [ ] 地铁购票 API
+- [x] [地铁购票 API](#地铁购票-api)
 - [x] [理财 API](#理财-api)
 
 ## 支付 API
@@ -145,6 +145,14 @@ func main() {
 操作广告接口 | ad.AlipayMarketingCdpAdvertiseOperateRequest
 查询广告接口 | ad.AlipayMarketingCdpAdvertiseQueryRequest
 创建广告接口 | ad.AlipayMarketingCdpAdvertiseCreateRequest
+
+## 地铁购票 API
+描述 | API
+---|---
+地铁购票站点数据查询 | subway.AlipayCommerceCityfacilitatorStationQueryRequest
+地铁购票核销码发码 | subway.AlipayCommerceCityfacilitatorVoucherGenerateRequest
+地铁购票订单批量查询 | subway.AlipayCommerceCityfacilitatorVoucherBatchqueryRequest
+地铁购票发码退款 | subway.AlipayCommerceCityfacilitatorVoucherRefundRequest
 
 ## 理财 API
 描述 | API
