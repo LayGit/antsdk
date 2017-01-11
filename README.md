@@ -1,5 +1,6 @@
 # antsdk
 蚂蚁金服(支付宝)开放平台 go-sdk
+支付宝API文档:[传送门](https://doc.open.alipay.com/doc2/apiList?docType=4)
 
 ## 使用示例
 
@@ -43,7 +44,7 @@ func main() {
 - [x] [生活缴费 API](#生活缴费-api)
 - [x] [车主服务 API](#车主服务-api)
 - [ ] 数据服务 API
-- [ ] 卡券 API
+- [x] [卡券 API](#卡券-api)
 - [x] [广告 API](#广告-api)
 - [x] [地铁购票 API](#地铁购票-api)
 - [x] [理财 API](#理财-api)
@@ -137,6 +138,17 @@ func main() {
 录入停车场信息 | car.AlipayEcoMycarParkingParkinglotinfoCreateRequest
 订单更新接口 | car.AlipayEcoMycarParkingOrderUpdateRequest
 车牌查询接口 | car.AlipayEcoMycarParkingVehicleQueryRequest
+
+## 卡券 API
+描述 | API
+---|---
+卡券模板创建 | coupon.AlipayPassTemplateAddRequest
+支付宝pass更新模版接口 | coupon.AlipayPassTemplateUpdateRequest
+支付宝pass新建卡券实例接口 | coupon.AlipayPassInstanceAddRequest
+支付宝pass更新卡券实例接口 | coupon.AlipayPassInstanceUpdateRequest
+集点查询 | coupon.KoubeiMarketingToolPointsQueryRequest
+更新卡集点 | coupon.KoubeiMarketingToolPointsUpdateRequest
+发券授权 | coupon.KoubeiMarketingToolPrizesendAuthRequest
 
 ## 广告 API
 描述 | API
