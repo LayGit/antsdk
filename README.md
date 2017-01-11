@@ -44,7 +44,7 @@ func main() {
 - [x] [车主服务 API](#车主服务-api)
 - [ ] 数据服务 API
 - [ ] 卡券 API
-- [ ] 广告 API
+- [x] [广告 API](#广告-api)
 - [ ] 地铁购票 API
 - [ ] 理财 API
 
@@ -137,3 +137,11 @@ func main() {
 录入停车场信息 | car.AlipayEcoMycarParkingParkinglotinfoCreateRequest
 订单更新接口 | car.AlipayEcoMycarParkingOrderUpdateRequest
 车牌查询接口 | car.AlipayEcoMycarParkingVehicleQueryRequest
+
+## 广告 API
+描述 | API
+---|---
+修改广告接口 | ad.AlipayMarketingCdpAdvertiseModifyRequest
+操作广告接口 | ad.AlipayMarketingCdpAdvertiseOperateRequest
+查询广告接口 | ad.AlipayMarketingCdpAdvertiseQueryRequest
+创建广告接口 | ad.AlipayMarketingCdpAdvertiseCreateRequest
