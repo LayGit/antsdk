@@ -46,7 +46,7 @@ func main() {
 - [ ] 卡券 API
 - [x] [广告 API](#广告-api)
 - [ ] 地铁购票 API
-- [ ] 理财 API
+- [x] [理财 API](#理财-api)
 
 ## 支付 API
 
@@ -145,3 +145,12 @@ func main() {
 操作广告接口 | ad.AlipayMarketingCdpAdvertiseOperateRequest
 查询广告接口 | ad.AlipayMarketingCdpAdvertiseQueryRequest
 创建广告接口 | ad.AlipayMarketingCdpAdvertiseCreateRequest
+
+## 理财 API
+描述 | API
+---|---
+余利宝账户和收益查询 | finance.MybankFinanceYulibaoAccountQueryRequest
+余利宝历史交易查询 | finance.MybankFinanceYulibaoTransHistoryQueryRequest
+余利宝申购 | finance.MybankFinanceYulibaoCapitalPurchaseRequest
+余利宝赎回 | finance.MybankFinanceYulibaoCapitalRansomRequest
+查询余利宝行情信息 | finance.MybankFinanceYulibaoPriceQueryRequest
