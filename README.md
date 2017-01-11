@@ -41,7 +41,7 @@ func main() {
 - [ ] 服务市场 API
 - [x] [账务 API](#账务-api)
 - [x] [生活缴费 API](#生活缴费-api)
-- [ ] 车主服务 API
+- [x] [车主服务 API](#车主服务-api)
 - [ ] 数据服务 API
 - [ ] 卡券 API
 - [ ] 广告 API
@@ -126,3 +126,14 @@ func main() {
 缴费直连代扣取消签约 | ebpp.AlipayEbppPdeductSignCancelRequest
 公共事业缴费直连代扣扣款支付接口 | ebpp.AlipayEbppPdeductPayRequest
 缴费直连代扣签约 | ebpp.AlipayEbppPdeductSignAddRequest
+
+## 车主服务 API
+描述 | API
+---|---
+订单同步接口 | car.AlipayEcoMycarParkingOrderSyncRequest
+车辆驶出接口 | car.AlipayEcoMycarParkingExitinfoSyncRequest
+修改停车场信息 | car.AlipayEcoMycarParkingParkinglotinfoUpdateRequest
+车辆驶入接口 | car.AlipayEcoMycarParkingEnterinfoSyncRequest
+录入停车场信息 | car.AlipayEcoMycarParkingParkinglotinfoCreateRequest
+订单更新接口 | car.AlipayEcoMycarParkingOrderUpdateRequest
+车牌查询接口 | car.AlipayEcoMycarParkingVehicleQueryRequest
