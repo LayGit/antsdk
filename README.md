@@ -44,7 +44,7 @@ func main() {
 - [x] [芝麻信用 API](#芝麻信用-api)
 - [x] [工具类 API](#工具类-api)
 - [x] [风险控制 API](#风险控制-api)
-- [ ] 服务市场 API
+- [x] [服务市场 API](#服务市场-api)
 - [x] [账务 API](#账务-api)
 - [x] [生活缴费 API](#生活缴费-api)
 - [x] [车主服务 API](#车主服务-api)
@@ -115,6 +115,19 @@ func main() {
 ---|---
 “蚁盾”风险评分服务 | risk.AlipaySecurityRiskRainscoreQueryRequest
 蚁盾风险评分服务上数版 | risk.SsdataDataserviceRiskRainscoreQueryRequest
+
+## 服务市场 API
+描述 | API
+---|---
+订购插件订单明细查询 | market.AlipayOpenServicemarketOrderQueryRequest
+服务市场商户确认订购通知 | market.AlipayOpenServicemarketOrderNotifyRequest
+服务商接单操作 | market.AlipayOpenServicemarketOrderAcceptRequest
+服务商完成订单内单个明细实施项 | market.AlipayOpenServicemarketOrderItemCompleteRequest
+服务订单明细实施项单项取消 | market.AlipayOpenServicemarketOrderItemCancelRequest
+服务商拒绝接单 | market.AlipayOpenServicemarketOrderRejectRequest
+门店插件下架操作 | market.AlipayOpenServicemarketCommodityShopOfflineRequest
+服务商代商家确认实施完成 | market.AlipayOpenServicemarketOrderItemConfirmRequest
+门店插件上架操作 | market.AlipayOpenServicemarketCommodityShopOnlineRequest
 
 ## 账务 API
 
