@@ -42,7 +42,7 @@ func main() {
 - [x] [支付 API](#支付-api)
 - [x] [会员 API](#会员-api)
 - [x] [店铺 API](#店铺-api)
-- [ ] 营销 API
+- [x] [营销 API](#营销-api)
 - [x] [服务窗 API](#服务窗-api)
 - [x] [芝麻信用 API](#芝麻信用-api)
 - [x] [工具类 API](#工具类-api)
@@ -90,6 +90,24 @@ func main() {
 业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest
 门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest
 门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest
+
+## 营销 API
+描述 | API
+---|---
+口碑营销活动列表查询 | marketing.KoubeiMarketingCampaignActivityBatchqueryRequest
+活动详情查询 | marketing.KoubeiMarketingCampaignActivityQueryRequest
+活动创建接口 | marketing.KoubeiMarketingCampaignActivityCreateRequest
+活动下架接口 | marketing.KoubeiMarketingCampaignActivityOfflineRequest
+招商门店分页查询接口 | marketing.KoubeiMarketingCampaignRecruitShopQueryRequest
+活动修改接口 | marketing.KoubeiMarketingCampaignActivityModifyRequest
+会员卡查询 | marketing.AlipayMarketingCardQueryRequest
+会员卡更新 | marketing.AlipayMarketingCardUpdateRequest
+会员卡开卡 | marketing.AlipayMarketingCardOpenRequest
+会员卡删卡 | marketing.AlipayMarketingCardDeleteRequest
+会员卡模板修改 | marketing.AlipayMarketingCardTemplateModifyRequest
+会员卡模板查询接口 | marketing.AlipayMarketingCardTemplateQueryRequest
+会员卡模板创建 | marketing.AlipayMarketingCardTemplateCreateRequest
+会员卡消费记录同步 | marketing.AlipayMarketingCardConsumeSyncRequest
 
 ## 服务窗 API
 描述 | API
