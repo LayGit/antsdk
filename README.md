@@ -29,8 +29,11 @@ func main() {
         // 错误处理
         fmt.Println(err)
     } else {
-        // todo:
-        fmt.Println(response.Code)
+        if response.IsSuccess() {
+          fmt.Println("调用成功")
+        } else {
+          fmt.Println("调用失败")
+        }
     }
 }
 ```
@@ -40,7 +43,7 @@ func main() {
 - [x] [会员 API](#会员-api)
 - [x] [店铺 API](#店铺-api)
 - [ ] 营销 API
-- [ ] 服务窗 API
+- [x] [服务窗 API](#服务窗-api)
 - [x] [芝麻信用 API](#芝麻信用-api)
 - [x] [工具类 API](#工具类-api)
 - [x] [风险控制 API](#风险控制-api)
@@ -87,6 +90,29 @@ func main() {
 业务流水批量查询接口 | shop.AlipayOfflineMarketApplyorderBatchqueryRequest
 门店摘要信息批量查询接口 | shop.AlipayOfflineMarketShopSummaryBatchqueryRequest
 门店类目配置查询接口 | shop.AlipayOfflineMarketShopCategoryQueryRequest
+
+## 服务窗 API
+描述 | API
+---|---
+模板消息行业设置修改接口 | open.AlipayOpenPublicTemplateMessageIndustryModifyRequest
+异步单发消息 | open.AlipayOpenPublicMessageCustomSendRequest
+查询绑定商户会员号 | open.AlipayOpenPublicAccountQueryRequest
+解除绑定商户会员号 | open.AlipayOpenPublicAccountDeleteRequest
+添加绑定商户会员号 | open.AlipayOpenPublicAccountCreateRequest
+服务窗基础信息查询接口 | open.AlipayOpenPublicInfoQueryRequest
+单发模板消息 | open.AlipayOpenPublicMessageSingleSendRequest
+查询服务窗联系人关注列表 | open.AlipayOpenPublicContactFollowBatchqueryRequest
+服务窗基础信息修改接口 | open.AlipayOpenPublicInfoModifyRequest
+公众服务平台查询菜单 | open.AlipayOpenPublicMenuQueryRequest
+获取用户地理位置 | open.AlipayOpenPublicGisQueryRequest
+创建菜单 | open.AlipayOpenPublicMenuCreateRequest
+更新菜单 | open.AlipayOpenPublicMenuModifyRequest
+带参推广二维码接口 | open.AlipayOpenPublicQrcodeCreateRequest
+消息模板领取接口 | open.AlipayOpenPublicTemplateMessageGetRequest
+群发消息 | open.AlipayOpenPublicMessageTotalSendRequest
+重新设置绑定商家会员号 | open.AlipayOpenPublicAccountResetRequest
+获取关注者列表 | open.AlipayOpenPublicFollowBatchqueryRequest
+服务窗短链自主生成接口 | open.AlipayOpenPublicShortlinkCreateRequest
 
 ## 芝麻信用 API
 
