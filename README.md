@@ -2,6 +2,11 @@
 蚂蚁金服(支付宝)开放平台 go-sdk
 支付宝API文档:[传送门](https://doc.open.alipay.com/doc2/apiList?docType=4)
 
+## 安装
+```bash
+go get github.com/LayGit/antsdk
+```
+
 ## 使用示例
 
 ```go
@@ -43,7 +48,7 @@ func main() {
 - [x] [账务 API](#账务-api)
 - [x] [生活缴费 API](#生活缴费-api)
 - [x] [车主服务 API](#车主服务-api)
-- [ ] 数据服务 API
+- [x] [数据服务 API](#数据服务-api)
 - [x] [卡券 API](#卡券-api)
 - [x] [广告 API](#广告-api)
 - [x] [地铁购票 API](#地铁购票-api)
@@ -138,6 +143,26 @@ func main() {
 录入停车场信息 | car.AlipayEcoMycarParkingParkinglotinfoCreateRequest
 订单更新接口 | car.AlipayEcoMycarParkingOrderUpdateRequest
 车牌查询接口 | car.AlipayEcoMycarParkingVehicleQueryRequest
+
+## 数据服务 API
+描述 | API
+---|---
+isv 回传的商户操作行为信息调用接口 | data.AlipayOfflineProviderShopactionRecordRequest
+isv 回传的用户操作行为信息调用接口 | data.AlipayOfflineProviderUseractionRecordRequest
+营销活动人群组规则修改接口 | data.KoubeiMarketingCampaignCrowdModifyRequest
+营销活动人群组规则创建接口 | data.KoubeiMarketingCampaignCrowdCreateRequest
+商户会员标签列表查询接口 | data.KoubeiMarketingCampaignTagsQueryRequest
+营销活动人群组规则详情查询接口 | data.KoubeiMarketingCampaignCrowdDetailQueryRequest
+营销活动人群组规则列表分页查询接口 | data.KoubeiMarketingCampaignCrowdBatchqueryRequest
+营销活动人群组规则删除接口 | data.KoubeiMarketingCampaignCrowdDeleteRequest
+营销活动人群组人数统计接口 | data.KoubeiMarketingCampaignCrowdCountRequest
+口碑商户经营数据查询接口 | data.KoubeiMarketingDataIndicatorQueryRequest
+自定义报表规则删除接口 | data.KoubeiMarketingDataCustomreportDeleteRequest
+自定义报表数据查询接口 | data.KoubeiMarketingDataCustomreportQueryRequest
+自定义报表规则详情查询接口 | data.KoubeiMarketingDataCustomreportDetailQueryRequest
+自定义报表规则列表分页查询接口 | data.KoubeiMarketingDataCustomreportBatchqueryRequest
+自定义报表规则创建及更新接口 | data.KoubeiMarketingDataCustomreportSaveRequest
+口碑菜品热度查询 | data.AlipayOfflineProviderDishQueryRequest
 
 ## 卡券 API
 描述 | API
